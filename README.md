@@ -12,6 +12,7 @@ RAG(Retrieval-Augmented Generation) 기술을 활용하여, 회사 내부 자료
 -   **다각적 답변 분석**: 지원자의 답변에 대해 아래 두 가지 관점에서 심층 분석을 수행합니다.
     1.  **내부 데이터 기반 사실 확인 (Fact-Checking)**: RAG 시스템을 통해 내부 자료와 지원자 주장의 일치 여부를 검증합니다.
     2.  **외부 데이터 기반 최신성/객관성 확보**: 웹 검색(DuckDuckGo)을 통해 지원자의 답변이 최신 시장 동향과 부합하는지 확인합니다.
+       
 -   **지능형 꼬리 질문**: AI가 답변 분석 결과를 바탕으로, 지원자의 논리를 더 깊게 파고드는 꼬리 질문을 생성하여 일관성과 깊이를 평가합니다.
 -   **자동 인덱스 동기화**: Azure Blob Storage의 문서가 변경(추가, 수정, 삭제)되면, Azure AI Search의 벡터 인덱스를 자동으로 동기화하여 항상 최신 정보를 유지합니다.
 -   **최종 종합 리포트**: 면접 종료 후, 전체 대화 내용을 바탕으로 지원자의 핵심 역량과 성장 가능성을 담은 종합 분석 리포트를 생성합니다.
@@ -21,8 +22,6 @@ RAG(Retrieval-Augmented Generation) 기술을 활용하여, 회사 내부 자료
 현재 시스템에 데이터가 준비되어 면접 진행이 가능한 기업은 아래와 같습니다. (총 30개 기업)
 
 > 삼성전자, 현대자동차, LG전자, 기아, SK하이닉스, 삼성에스디에스, 삼성SDI, CJ, 케이티, 한국전력공사, HDC, 롯데지주, 한국타이어앤테크놀로지, 하나금융지주, 현대백화점, 농심, 코오롱, 하림, GS건설, 웅진, HD현대, GS, 노루페인트, 풍산, 동서, SPC삼립, LS, HS효성, 신세계, 케이티앤지
-
-Azure AI Search 인덱스를 동기화하시겠습니까? (y/n): 라는 질문에는 **n**을 입력하고 엔터를 누릅니다. (미리 준비된 30개 기업의 인덱스가 이미 최신 상태입니다. 직접 데이터를 추가/수정한 경우에만 y를 선택하세요.)
 
 ## ⚙️ 시스템 아키텍처
 
@@ -52,3 +51,33 @@ cd your-project-directory
 
 # 2. 필수 라이브러리 설치
 python -m pip install -r requirements.txt
+```
+### 3. 환경 변수 설정
+
+프로젝트 루트에 .env.keys 파일을 생성하고, 아래 목록에 맞게 자신의 Azure 서비스 키와 엔드포인트 정보를 입력합니다.
+```bash
+# .env.keys
+
+# Azure OpenAI (LLM & Embedding)
+AZURE_OPENAI_ENDPOINT="https://<your-openai-service-name>.openai.azure.com/"
+AZURE_OPENAI_KEY="<your-openai-api-key>"
+API_VERSION="2024-02-15-preview"
+AZURE_OPENAI_MODEL="<your-chat-model-deployment-name>"
+AZURE_EMBEDDING_MODEL="<your-embedding-model-deployment-name>"
+
+# Azure Storage (RAG용)
+AZURE_STORAGE_CONNECTION_STRING="<your-storage-connection-string>"
+
+# Azure AI Search (RAG용)
+AZURE_SEARCH_ENDPOINT="https://<your-search-service-name>.search.windows.net"
+AZURE_SEARCH_KEY="<your-search-admin-key>"
+```
+### 4. 데이터 준비
+사전에 생성한 Azure Blob Storage 컨테이너(예: interview-data)에 분석할 회사 자료(PDF, TXT 파일)를 업로드합니다.
+
+### 5. 시스템 실행
+```bash
+python final_interview_rag.py
+```
+Azure AI Search 인덱스를 동기화하시겠습니까? (y/n): 라는 질문에는 **n**을 입력하고 엔터를 누릅니다. (미리 준비된 30개 기업의 인덱스가 이미 최신 상태입니다. 직접 데이터를 추가/수정한 경우에만 y를 선택하세요.)
+
