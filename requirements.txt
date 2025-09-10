@@ -1,0 +1,22 @@
+
+# Core AI and Language Model Libraries
+openai
+llama-index
+llama-index-llms-azure-openai
+llama-index-embeddings-azure-openai
+llama-index-vector-stores-azureaisearch
+llama-index-readers-file
+
+# Azure SDKs
+azure-storage-blob
+azure-search-documents
+azure-core
+
+# Web Search Tool
+duckduckgo-search
+
+# Utility Libraries
+python-dotenv
+unidecode
+PyMuPDF
+tqdm

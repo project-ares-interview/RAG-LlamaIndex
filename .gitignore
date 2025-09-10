@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / C extensions
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environments
+.venv
+venv
+env
+.env
+
+# Environment variables
+# API 키와 같은 민감한 정보를 포함하므로 절대로 Git에 올리면 안 됩니다.
+.env.keys
+.env.*
+!.env.example
+!.env.keys.example
+
+# IDE / Editor directories
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Build and distribution artifacts
+build/
+dist/
+*.egg-info/
+
+# Python test and coverage reports
+.pytest_cache/
+.tox/
+htmlcov/
+.coverage
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
